@@ -17,8 +17,23 @@ import MySingleBook from "./MySingleBook";
 class MyBookList extends Component {
   state = {
     selectedBook: fantasy,
+    titleBook: "",
   };
+
+  handleFieldChange = (propertyValue) => {
+    this.setState({ titleBook: propertyValue });
+    console.log(this.state);
+  };
+
   render() {
+    const filteredBooks = this.state.selectedBook.filter(
+      (book) =>
+        book.title
+          .toLocaleLowerCase()
+          .includes(
+            this.state.titleBook.toLocaleLowerCase()
+          )
+    );
     return (
       <>
         <Container>
@@ -86,6 +101,11 @@ class MyBookList extends Component {
                   <Form.Control
                     type="text"
                     placeholder="Inserisci il titolo del libro"
+                    onChange={(e) => {
+                      this.handleFieldChange(
+                        e.target.value
+                      );
+                    }}
                   />
                 </Form.Group>
               </Form>
@@ -94,15 +114,15 @@ class MyBookList extends Component {
         </Container>
         <Container>
           <Row xs={1} md={3} lg={5} className="gy-5">
-            {this.state.selectedBook.map((book) => {
+            {filteredBooks.map((book) => {
               return (
-                <Col>
+                <Col key={`book-${book.asin}`}>
                   <MySingleBook
                     img={book.img}
                     title={book.title}
                     category={book.category}
                     price={book.price}
-                    key={`book-${book.asin}`}
+                    asin={book.asin}
                   />
                 </Col>
               );
