@@ -10,7 +10,7 @@ function MyFooter() {
     <Stack
       direction="horizontal"
       gap={2}
-      className="bg-dark fixed-bottom"
+      className="bg-dark"
     >
       <div className="p-2">
         <Stack gap={3} className=" mx-auto">
